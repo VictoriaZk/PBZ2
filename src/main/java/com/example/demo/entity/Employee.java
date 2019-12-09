@@ -13,11 +13,10 @@ import javax.validation.constraints.Min;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "employee")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String FIO;
 
@@ -25,7 +24,7 @@ public class Employee {
     @Min(18)
     private int age;
 
-    @Column
+    @Column//If name of the column in db match to the name of property in class, there is no need for this annotation
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -33,14 +32,13 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", FIO='" + FIO + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                ", maritalStatus='" + maritalStatus + '\'' +
-                '}';
-    }
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    }, fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
+    private Position position;
+
 }

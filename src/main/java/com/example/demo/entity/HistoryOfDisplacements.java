@@ -5,14 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "history_of_displacements")
 public class HistoryOfDisplacements {
@@ -20,6 +19,13 @@ public class HistoryOfDisplacements {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    }, fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
     private Position position;
 
     @Column (name = "start_of_work")
@@ -29,8 +35,4 @@ public class HistoryOfDisplacements {
     @Column (name = "end_of_work")
     @DateTimeFormat(pattern = "DD-MM-YYYY")
     private Date endOfWork;
-
-
-    public HistoryOfDisplacements() {
-    }
 }

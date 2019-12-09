@@ -1,46 +1,37 @@
 package com.example.demo.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @Data
-@ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "position")
+@Table
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
+    @Column (name = "name")
     private String name;
+
+    @Column (name = "shortName")
     private String shortName;
+
+    @Column (name = "cipher")
     private String cipher;
 
     @Min(1)
     @Max(18)
+    @Column (name = "lowerDischarge")
     private int lowerDischarge;
 
     @Min(1)
     @Max(18)
+    @Column (name = "upperDischarge")
     private int upperDischarge;
 
-    @Override
-    public String toString() {
-        return "Position{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", shortName='" + shortName + '\'' +
-                ", cipher='" + cipher + '\'' +
-                ", lowerDischarge=" + lowerDischarge +
-                ", upperDischarge=" + upperDischarge +
-                '}';
-    }
 }
